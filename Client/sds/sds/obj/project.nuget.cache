@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "nAQrRb8iFsNBNEr7dXsdw7sFFVwIfcr59+9gyAC7Zc7Pe+VLFQIqWp0mr8apdYgCtglKTzChzG7iivgJC25dEw==",
+  "success": true,
+  "projectFilePath": "D:\\pythone\\android_project\\Android_studios\\virtual\\sds\\sds\\sds.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Pargev\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Pargev\\.nuget\\packages\\selenium.webdriver\\4.17.0\\selenium.webdriver.4.17.0.nupkg.sha512"
+  ],
+  "logs": []
+}

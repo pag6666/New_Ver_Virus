@@ -1,0 +1,15 @@
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\bin\Debug\net8.0\UpdateGit.exe
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\bin\Debug\net8.0\UpdateGit.deps.json
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\bin\Debug\net8.0\UpdateGit.runtimeconfig.json
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\bin\Debug\net8.0\UpdateGit.dll
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\bin\Debug\net8.0\UpdateGit.pdb
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\obj\Debug\net8.0\UpdateGit.GeneratedMSBuildEditorConfig.editorconfig
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\obj\Debug\net8.0\UpdateGit.AssemblyInfoInputs.cache
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\obj\Debug\net8.0\UpdateGit.AssemblyInfo.cs
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\obj\Debug\net8.0\UpdateGit.csproj.CoreCompileInputs.cache
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\obj\Debug\net8.0\UpdateGit.sourcelink.json
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\obj\Debug\net8.0\UpdateGit.dll
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\obj\Debug\net8.0\refint\UpdateGit.dll
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\obj\Debug\net8.0\UpdateGit.pdb
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\obj\Debug\net8.0\UpdateGit.genruntimeconfig.cache
+D:\pythone\android_project\Android_studios\virtual\UpdateGit\UpdateGit\obj\Debug\net8.0\ref\UpdateGit.dll
