@@ -1,4 +1,7 @@
-﻿using System.Net;
+﻿using Microsoft.Win32;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
@@ -9,12 +12,12 @@ namespace UpdateGit
         static void Error_Read(string user) 
         {
             Console.WriteLine("Error Read");
-            clients.Remove(user);
+            //clients.Remove(user);
         }
         static void Error_Write(string user) 
         {
             Console.WriteLine("Error Write");
-            clients.Remove(user);
+           // clients.Remove(user);
         }
         static bool Write(Stream stream, string text,string user) 
         {
@@ -67,7 +70,7 @@ namespace UpdateGit
             string requst = "null";
             try
             {
-                byte[] buffer = new byte[10024];
+                byte[] buffer = new byte[30024];
                 int size = stream.Read(buffer, 0, buffer.Length);
                 requst = Encoding.UTF8.GetString(buffer, 0, size);
             }
@@ -123,7 +126,7 @@ namespace UpdateGit
        
         static string ServerCommands(string command) 
         {
-            string[] helper = { "ul", "help", "connect", "clear","hide"};
+            string[] helper = { "ul", "help", "connect", "clear","hide","connectall"};
             string requst = "null";
             command = command.ToLower().Trim();
             switch (command)
@@ -154,33 +157,41 @@ namespace UpdateGit
 
                         while (true) {
                             Console.WriteLine("Input command for client");
+                            Console.ResetColor();
                             string _command = Console.ReadLine();
                             if (_command?.Trim().Length > 0 && command != null) 
                             {
 
-                           
-                            if (_command == "hide") 
-                            {
-                                break;
-                            }
-                            bool error = Write(stream, _command, username);
-                            string answer = Read(stream, username);
-                            Console.WriteLine(answer);
-                            //
-                            switch (answer)
-                            {
-                                //code answer
                                
-                                case "clear":
-                                    Console.Clear();
-                                    requst = "clear";
+                                if (_command.Trim() == "hide") 
+                                {
                                     break;
+                                }
+                                if (_command.Trim() == "clear") 
+                                {
+                                 Console.Clear();
+                                }
+                                 bool error = Write(stream, _command, username);
+                                    string answer = Read(stream, username);
+                                    Console.ForegroundColor = ConsoleColor.Blue;
+                                    Console.WriteLine($"one Client {username} #################################################\n");
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine(answer);
+                                //
+                                switch (answer)
+                                {
+                                    //code answer
+                                   
+                                    case "clear":
+                                        Console.Clear();
+                                     requst = "clear";
+                                        break;
 
                                 default: break;
-                            }
+                                }
                             
-                            //
-                            if (error) 
+                                //
+                                if (error) 
                                 break;
                             }
                         }
@@ -196,7 +207,55 @@ namespace UpdateGit
                     }
                    
                     break;
-                    default:requst = "the command was not found"; break; 
+                    default:requst = "the command was not found"; break;
+                case "connectall":
+
+                    bool iswhile = true;
+                        while (iswhile)
+                        {
+                        foreach (var i in clients) {
+                            Console.WriteLine("Input command for client");
+                            Console.ResetColor();
+                            string _command = Console.ReadLine();
+                            if (_command?.Trim().Length > 0 && command != null)
+                            {
+
+
+                                if (_command.Trim() == "hide")
+                                {
+                                    iswhile = false;
+                                }
+                                if (_command.Trim() == "clear")
+                                {
+                                    Console.Clear();
+                                }
+                                bool error = Write(i.Value.GetStream(), _command,i.Key);
+                                string answer = Read(i.Value.GetStream(),i.Key);
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.WriteLine($"multy Client {i.Key} #################################################\n");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine(answer);
+                                //
+                                switch (answer)
+                                {
+                                    //code answer
+
+                                    case "clear":
+                                        Console.Clear();
+                                        requst = "clear";
+                                        break;
+
+                                    default: break;
+                                }
+
+                                //
+                                if (error)
+                                    break;
+                            }
+                        }
+                      
+                    }
+                    break;
             }
             return requst;
         }
@@ -221,19 +280,8 @@ namespace UpdateGit
         }
         static void Main()
         {
+           
             Console.Title = "Server";
-            /* using (WebClient client = new WebClient()) 
-             {
-                 string ouInside = @"C:\1\File.txt", urlInside = "ya.ry";
-                 Console.WriteLine("input ouInside");
-                 ouInside = Console.ReadLine();
-                 Console.WriteLine("input urlInside");
-                 urlInside = Console.ReadLine();
-                 client.DownloadFile(urlInside, ouInside);
-
-
-
-             }*/
             Thread t1 = new Thread(ThreadingServer);
             Thread t2 = new Thread(CheckConnectClient);
             t1.Start();

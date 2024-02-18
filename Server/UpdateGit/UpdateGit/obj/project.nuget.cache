@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "7mAm07BKNgSYaJN9J6JASrDekvaPUrH8dZ2EumSuejyPMj69zy1zG9NFTa1vy+VoiTEt6+AleMLrww2iK6q7dA==",
+  "dgSpecHash": "PCzIbk+pouM17tDlBwtZ7Yc9CBEpZLR/APrK8e6uqFExAnlDrh6SbUg8V+1qtfbThckYBnzZSbx7NAQhe7+1YA==",
   "success": true,
-  "projectFilePath": "D:\\pythone\\android_project\\Android_studios\\virtual\\UpdateGit\\UpdateGit\\UpdateGit.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Pargev\\Desktop\\Git\\New_Ver_Virus\\Server\\UpdateGit\\UpdateGit\\UpdateGit.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Pargev\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
+    "C:\\Users\\Pargev\\.nuget\\packages\\system.drawing.common\\8.0.2\\system.drawing.common.8.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

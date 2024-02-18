@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\pythone\\android_project\\Android_studios\\virtual\\sds\\sds\\sds.csproj": {}
+    "C:\\Users\\Pargev\\Desktop\\Git\\New_Ver_Virus\\Client\\sds\\sds\\sds.csproj": {}
   },
   "projects": {
-    "D:\\pythone\\android_project\\Android_studios\\virtual\\sds\\sds\\sds.csproj": {
+    "C:\\Users\\Pargev\\Desktop\\Git\\New_Ver_Virus\\Client\\sds\\sds\\sds.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\pythone\\android_project\\Android_studios\\virtual\\sds\\sds\\sds.csproj",
+        "projectUniqueName": "C:\\Users\\Pargev\\Desktop\\Git\\New_Ver_Virus\\Client\\sds\\sds\\sds.csproj",
         "projectName": "sds",
-        "projectPath": "D:\\pythone\\android_project\\Android_studios\\virtual\\sds\\sds\\sds.csproj",
+        "projectPath": "C:\\Users\\Pargev\\Desktop\\Git\\New_Ver_Virus\\Client\\sds\\sds\\sds.csproj",
         "packagesPath": "C:\\Users\\Pargev\\.nuget\\packages\\",
-        "outputPath": "D:\\pythone\\android_project\\Android_studios\\virtual\\sds\\sds\\obj\\",
+        "outputPath": "C:\\Users\\Pargev\\Desktop\\Git\\New_Ver_Virus\\Client\\sds\\sds\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -44,9 +44,17 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Caliburn.Micro.Core": {
+              "target": "Package",
+              "version": "[4.0.212, )"
+            },
             "Selenium.WebDriver": {
               "target": "Package",
               "version": "[4.17.0, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[8.0.2, )"
             }
           },
           "imports": [

